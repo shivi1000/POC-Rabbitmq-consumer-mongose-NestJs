@@ -8,6 +8,7 @@ export interface IUserNotification extends Document {
   recipientType: number;
   isRead: boolean;
   deviceToken: string;
+  notificationDetails: object;
 }
 
 const SenderDetails = new Schema(
