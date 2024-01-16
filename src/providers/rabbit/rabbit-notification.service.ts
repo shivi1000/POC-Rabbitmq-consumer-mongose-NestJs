@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { FirebaseService } from '../firebase/firebase.service';
 import { NotificationService } from '../firebase/notification.service';
-import { CONSTANT } from 'src/common/constant';
+import { CreateNotificationDto } from '../dto/notification.dto';
 
 @Injectable()
 export class RabbitNotificationService {
   constructor(private readonly notificationService: NotificationService, private readonly firebaseService: FirebaseService) {}
 
-  async sendUserNotification(data: any) {
-    const pushData: any = data.pushData;
-    if (pushData.title == undefined) {
-      pushData.title = CONSTANT.APP_NAME;
+  async sendNotification(data: any) {
+    const createNotificationDto: CreateNotificationDto = data.createNotificationDto;
+    const [notificationBody, staticDeviceTokens] = await this.notificationService.sendPush(createNotificationDto);
+    if (Array.isArray(staticDeviceTokens)) {
+      await this.firebaseService.sendBulkPush(staticDeviceTokens, notificationBody);
+    } else {
+      console.error('Invalid staticDeviceTokens:', staticDeviceTokens);
     }
-    const [deviceTokens, notificationBody] = await this.notificationService.userPush(pushData);
-    console.info('sendUserNotification : ', 'deviceTokens : ', deviceTokens, 'notificationBody : ', notificationBody);
-    await this.firebaseService.sendPush(deviceTokens, notificationBody);
   }
 }

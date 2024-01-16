@@ -35,7 +35,7 @@ export class Consumer {
     switch (data.channel) {
       case ENUM.CHANNEL_TYPE.PUSH:
         {
-          await this.rabbitNotificationService.sendUserNotification(data);
+          await this.rabbitNotificationService.sendNotification(data);
         }
         break;
       default:

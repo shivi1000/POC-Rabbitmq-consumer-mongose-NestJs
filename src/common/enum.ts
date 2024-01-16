@@ -1,7 +1,6 @@
 export const ENUM = {
   COLLECTIONS: {
-    USER: 'users',
-    USER_NOTIFICATION: 'userNotifications',
+    NOTIFICATION: 'notifications',
   },
   NOTIFICATION_TYPE: {
     PUSH: 1,
