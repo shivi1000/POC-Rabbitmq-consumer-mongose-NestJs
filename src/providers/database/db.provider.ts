@@ -34,7 +34,7 @@ export const databaseProviders = [
         console.debug('[MongoDB] reconnecting... %d');
       });
 
-      return mongoose.connect(config.get('DB_URL') || 'mongodb://localhost:27017');
+      return mongoose.connect('mongodb://localhost:27017/poc');
     },
     inject: [ConfigService],
   },

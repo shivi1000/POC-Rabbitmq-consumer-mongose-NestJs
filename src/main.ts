@@ -1,5 +1,4 @@
 import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
@@ -25,12 +24,7 @@ async function bootstrap() {
   app.use(new LoggerMiddleware().use);
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   const httpAdapter = app.get(HttpAdapterHost);
-  //app.useGlobalFilters(new AllExceptionsFilter(httpAdapter, new Logger()));
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
-  const configService = app.get(ConfigService);
-  console.info('Port number is: ', configService.get<string>('PORT'));
-  const port: number = configService.get<number>('PORT') ?? 8001;
-
-  await app.listen(port);
+  await app.listen(8009);
 }
 bootstrap();
