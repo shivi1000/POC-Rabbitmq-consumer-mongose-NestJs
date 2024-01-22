@@ -3,10 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class NotificationService {
-  NOTIFICATION_BADGE;
-  constructor(private readonly configService: ConfigService) {
-    this.NOTIFICATION_BADGE = this.configService.get<string>('NOTIFICATION_BADGE');
-  }
+  constructor(private readonly configService: ConfigService) {}
 
   async sendPush(createNotificationDto: any) {
     try {
@@ -45,13 +42,11 @@ export class NotificationService {
       const fireBaseNotification = {
         notification: {
           body: notificationBody.description,
-          icon: this.NOTIFICATION_BADGE,
           title: notificationBody.title,
         },
         data: {
           title: createNotificationDto.title ? createNotificationDto.title : '',
           description: createNotificationDto.description ? createNotificationDto.description : '',
-          images: createNotificationDto.images ? createNotificationDto.images : '',
           notificationType: createNotificationDto.notificationType.toString(),
         },
       };
