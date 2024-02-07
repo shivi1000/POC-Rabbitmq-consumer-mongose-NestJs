@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { resolve } from 'path';
 
+async function firebaseStart() {
+  admin.initializeApp({
+    credential: admin.credential.cert(resolve(process.cwd(), `firebase.dev.json`)),
+  });
+}
 @Injectable()
 export class FirebaseService {
   async sendBulkPush(staticDeviceTokens: string[], payload: any, options: any = {}) {
     try {
+      firebaseStart();
       if (staticDeviceTokens.length <= 0) {
         console.info('INFO: Bulk Notification not sent because there were no device tokens');
         return;

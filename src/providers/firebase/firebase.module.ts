@@ -13,11 +13,8 @@ import { EntityModule } from 'src/entity/entity.module';
 })
 export class FirebaseModule {
   constructor(private readonly configService: ConfigService) {
-    const env = process.env.NODE_ENV || false;
-    if (!env) process.exit(100);
     admin.initializeApp({
-      credential: admin.credential.cert(resolve(process.cwd(), `firebase.${env}.json`)),
-      databaseURL: this.configService.get<string>('FIREBASE_DATABASE_URL'),
+      credential: admin.credential.cert(resolve(process.cwd(), `firebase.dev.json`)),
     });
   }
 }
