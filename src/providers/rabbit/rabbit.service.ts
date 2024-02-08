@@ -20,6 +20,7 @@ export class RabbitMQ implements OnApplicationShutdown {
   async createConnection() {
     return new Promise<ConfirmChannel[]>(async (resolve, reject) => {
       try {
+        console.log("inside try")
         const connectionOptions: Options.Connect = {
           hostname: 'localhost',
           port: 5672,
@@ -62,7 +63,7 @@ export class RabbitMQ implements OnApplicationShutdown {
 
   private async consumeQueues(channel: ConfirmChannel, routingKey: string) {
     try {
-      const QUEUE: any = this.configService.get<string>('RABBIT_MQ_QUEUE');
+      const QUEUE: any = this.configService.get<string>('RABBIT_MQ_QUEUE') ?? 'demo_queue';
       await channel.assertExchange(QUEUE, 'direct', { durable: false });
       const q0 = await channel.assertQueue(QUEUE, { exclusive: false });
       channel.bindQueue(q0.queue, QUEUE, routingKey);
