@@ -23,7 +23,7 @@ export class EmailService {
     };
     try {
       await this.mailerService.sendMail(mailOptions);
-      console.log('Csv File sent successfully.');
+      console.log('CSV File sent successfully.');
     } catch (error) {
       console.error('Error sending csv file:', error);
       throw error;
