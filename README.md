@@ -78,6 +78,14 @@ RABBIT_MQ_PORT=5672
 
 ```
 
+## NODEMAILER
+
+```bash
+HOST='smtp.gmail.com'
+user=''                   //add your email
+password=''               //generate your password
+
+```
 
 ## 1.3 Start the Project
 
